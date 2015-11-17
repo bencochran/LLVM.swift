@@ -1,0 +1,495 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B827FD8A1BFB1F370003F5D7 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = B827FD891BFB1F370003F5D7 /* LLVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B827FD951BFB1F380003F5D7 /* LLVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B827FD841BFB1F370003F5D7 /* LLVM.framework */; };
+		B827FD9A1BFB1F380003F5D7 /* LLVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FD991BFB1F380003F5D7 /* LLVMTests.swift */; };
+		B827FDB01BFB1FE90003F5D7 /* BasicBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA41BFB1FE90003F5D7 /* BasicBlock.swift */; };
+		B827FDB11BFB1FE90003F5D7 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA51BFB1FE90003F5D7 /* Builder.swift */; };
+		B827FDB21BFB1FE90003F5D7 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA61BFB1FE90003F5D7 /* Const.swift */; };
+		B827FDB31BFB1FE90003F5D7 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA71BFB1FE90003F5D7 /* Context.swift */; };
+		B827FDB41BFB1FE90003F5D7 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA81BFB1FE90003F5D7 /* Function.swift */; };
+		B827FDB51BFB1FE90003F5D7 /* GlobalVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDA91BFB1FE90003F5D7 /* GlobalVariable.swift */; };
+		B827FDB61BFB1FE90003F5D7 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAA1BFB1FE90003F5D7 /* Instruction.swift */; };
+		B827FDB71BFB1FE90003F5D7 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAB1BFB1FE90003F5D7 /* Module.swift */; };
+		B827FDB81BFB1FE90003F5D7 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAC1BFB1FE90003F5D7 /* Type.swift */; };
+		B827FDB91BFB1FE90003F5D7 /* Use.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAD1BFB1FE90003F5D7 /* Use.swift */; };
+		B827FDBA1BFB1FE90003F5D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAE1BFB1FE90003F5D7 /* User.swift */; };
+		B827FDBB1BFB1FE90003F5D7 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827FDAF1BFB1FE90003F5D7 /* Value.swift */; };
+		B8A9A6DE1BFB278900EC8D1A /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B8A9A6DD1BFB278900EC8D1A /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B8A9A6E01BFB27C200EC8D1A /* Analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = B8A9A6DF1BFB27C200EC8D1A /* Analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B8A9A6E21BFB27F300EC8D1A /* Support.h in Headers */ = {isa = PBXBuildFile; fileRef = B8A9A6E11BFB27F300EC8D1A /* Support.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B8A9A6E41BFB280B00EC8D1A /* DataTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B8A9A6E31BFB280B00EC8D1A /* DataTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B827FD961BFB1F380003F5D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B827FD7B1BFB1F370003F5D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B827FD831BFB1F370003F5D7;
+			remoteInfo = LLVM;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B827FD841BFB1F370003F5D7 /* LLVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LLVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B827FD881BFB1F370003F5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B827FD891BFB1F370003F5D7 /* LLVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLVM.h; sourceTree = "<group>"; };
+		B827FD941BFB1F380003F5D7 /* LLVMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLVMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B827FD991BFB1F380003F5D7 /* LLVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLVMTests.swift; sourceTree = "<group>"; };
+		B827FD9B1BFB1F380003F5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B827FDA41BFB1FE90003F5D7 /* BasicBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicBlock.swift; sourceTree = "<group>"; };
+		B827FDA51BFB1FE90003F5D7 /* Builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		B827FDA61BFB1FE90003F5D7 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		B827FDA71BFB1FE90003F5D7 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		B827FDA81BFB1FE90003F5D7 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		B827FDA91BFB1FE90003F5D7 /* GlobalVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariable.swift; sourceTree = "<group>"; };
+		B827FDAA1BFB1FE90003F5D7 /* Instruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
+		B827FDAB1BFB1FE90003F5D7 /* Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		B827FDAC1BFB1FE90003F5D7 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		B827FDAD1BFB1FE90003F5D7 /* Use.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Use.swift; sourceTree = "<group>"; };
+		B827FDAE1BFB1FE90003F5D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B827FDAF1BFB1FE90003F5D7 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
+		B827FDC51BFB21C40003F5D7 /* LLVM.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LLVM.xcconfig; sourceTree = "<group>"; };
+		B8A9A6DD1BFB278900EC8D1A /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		B8A9A6DF1BFB27C200EC8D1A /* Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analysis.h; sourceTree = "<group>"; };
+		B8A9A6E11BFB27F300EC8D1A /* Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Support.h; sourceTree = "<group>"; };
+		B8A9A6E31BFB280B00EC8D1A /* DataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTypes.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B827FD801BFB1F370003F5D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B827FD911BFB1F380003F5D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B827FD951BFB1F380003F5D7 /* LLVM.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B827FD7A1BFB1F370003F5D7 = {
+			isa = PBXGroup;
+			children = (
+				B827FDC51BFB21C40003F5D7 /* LLVM.xcconfig */,
+				B827FD861BFB1F370003F5D7 /* LLVM */,
+				B827FD981BFB1F380003F5D7 /* LLVMTests */,
+				B827FD851BFB1F370003F5D7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B827FD851BFB1F370003F5D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B827FD841BFB1F370003F5D7 /* LLVM.framework */,
+				B827FD941BFB1F380003F5D7 /* LLVMTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B827FD861BFB1F370003F5D7 /* LLVM */ = {
+			isa = PBXGroup;
+			children = (
+				B827FDA41BFB1FE90003F5D7 /* BasicBlock.swift */,
+				B827FDA51BFB1FE90003F5D7 /* Builder.swift */,
+				B827FDA61BFB1FE90003F5D7 /* Const.swift */,
+				B827FDA71BFB1FE90003F5D7 /* Context.swift */,
+				B827FDA81BFB1FE90003F5D7 /* Function.swift */,
+				B827FDA91BFB1FE90003F5D7 /* GlobalVariable.swift */,
+				B827FDAA1BFB1FE90003F5D7 /* Instruction.swift */,
+				B827FDAB1BFB1FE90003F5D7 /* Module.swift */,
+				B827FDAC1BFB1FE90003F5D7 /* Type.swift */,
+				B827FDAD1BFB1FE90003F5D7 /* Use.swift */,
+				B827FDAE1BFB1FE90003F5D7 /* User.swift */,
+				B827FDAF1BFB1FE90003F5D7 /* Value.swift */,
+				B8A9A6DC1BFB275C00EC8D1A /* llvm-c */,
+				B827FD871BFB1F370003F5D7 /* Supporting Files */,
+			);
+			path = LLVM;
+			sourceTree = "<group>";
+		};
+		B827FD871BFB1F370003F5D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B827FD891BFB1F370003F5D7 /* LLVM.h */,
+				B827FD881BFB1F370003F5D7 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B827FD981BFB1F380003F5D7 /* LLVMTests */ = {
+			isa = PBXGroup;
+			children = (
+				B827FD991BFB1F380003F5D7 /* LLVMTests.swift */,
+				B827FD9B1BFB1F380003F5D7 /* Info.plist */,
+			);
+			path = LLVMTests;
+			sourceTree = "<group>";
+		};
+		B8A9A6DC1BFB275C00EC8D1A /* llvm-c */ = {
+			isa = PBXGroup;
+			children = (
+				B8A9A6E31BFB280B00EC8D1A /* DataTypes.h */,
+				B8A9A6DF1BFB27C200EC8D1A /* Analysis.h */,
+				B8A9A6DD1BFB278900EC8D1A /* Core.h */,
+				B8A9A6E11BFB27F300EC8D1A /* Support.h */,
+			);
+			path = "llvm-c";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B827FD811BFB1F370003F5D7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8A9A6E21BFB27F300EC8D1A /* Support.h in Headers */,
+				B827FD8A1BFB1F370003F5D7 /* LLVM.h in Headers */,
+				B8A9A6DE1BFB278900EC8D1A /* Core.h in Headers */,
+				B8A9A6E41BFB280B00EC8D1A /* DataTypes.h in Headers */,
+				B8A9A6E01BFB27C200EC8D1A /* Analysis.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B827FD831BFB1F370003F5D7 /* LLVM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B827FD9E1BFB1F380003F5D7 /* Build configuration list for PBXNativeTarget "LLVM" */;
+			buildPhases = (
+				B827FD7F1BFB1F370003F5D7 /* Sources */,
+				B827FD801BFB1F370003F5D7 /* Frameworks */,
+				B827FD811BFB1F370003F5D7 /* Headers */,
+				B827FD821BFB1F370003F5D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LLVM;
+			productName = LLVM;
+			productReference = B827FD841BFB1F370003F5D7 /* LLVM.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B827FD931BFB1F380003F5D7 /* LLVMTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B827FDA11BFB1F380003F5D7 /* Build configuration list for PBXNativeTarget "LLVMTests" */;
+			buildPhases = (
+				B827FD901BFB1F380003F5D7 /* Sources */,
+				B827FD911BFB1F380003F5D7 /* Frameworks */,
+				B827FD921BFB1F380003F5D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B827FD971BFB1F380003F5D7 /* PBXTargetDependency */,
+			);
+			name = LLVMTests;
+			productName = LLVMTests;
+			productReference = B827FD941BFB1F380003F5D7 /* LLVMTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B827FD7B1BFB1F370003F5D7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Ben Cochran";
+				TargetAttributes = {
+					B827FD831BFB1F370003F5D7 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					B827FD931BFB1F380003F5D7 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = B827FD7E1BFB1F370003F5D7 /* Build configuration list for PBXProject "LLVM" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B827FD7A1BFB1F370003F5D7;
+			productRefGroup = B827FD851BFB1F370003F5D7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B827FD831BFB1F370003F5D7 /* LLVM */,
+				B827FD931BFB1F380003F5D7 /* LLVMTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B827FD821BFB1F370003F5D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B827FD921BFB1F380003F5D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B827FD7F1BFB1F370003F5D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B827FDB01BFB1FE90003F5D7 /* BasicBlock.swift in Sources */,
+				B827FDB31BFB1FE90003F5D7 /* Context.swift in Sources */,
+				B827FDB51BFB1FE90003F5D7 /* GlobalVariable.swift in Sources */,
+				B827FDB61BFB1FE90003F5D7 /* Instruction.swift in Sources */,
+				B827FDB11BFB1FE90003F5D7 /* Builder.swift in Sources */,
+				B827FDB71BFB1FE90003F5D7 /* Module.swift in Sources */,
+				B827FDB21BFB1FE90003F5D7 /* Const.swift in Sources */,
+				B827FDB41BFB1FE90003F5D7 /* Function.swift in Sources */,
+				B827FDB81BFB1FE90003F5D7 /* Type.swift in Sources */,
+				B827FDB91BFB1FE90003F5D7 /* Use.swift in Sources */,
+				B827FDBA1BFB1FE90003F5D7 /* User.swift in Sources */,
+				B827FDBB1BFB1FE90003F5D7 /* Value.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B827FD901BFB1F380003F5D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B827FD9A1BFB1F380003F5D7 /* LLVMTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B827FD971BFB1F380003F5D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B827FD831BFB1F370003F5D7 /* LLVM */;
+			targetProxy = B827FD961BFB1F380003F5D7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B827FD9C1BFB1F380003F5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B827FD9D1BFB1F380003F5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B827FD9F1BFB1F380003F5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B827FDC51BFB21C40003F5D7 /* LLVM.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = LLVM/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B827FDA01BFB1F380003F5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B827FDC51BFB21C40003F5D7 /* LLVM.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = LLVM/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B827FDA21BFB1F380003F5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LLVMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bencochran.LLVMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B827FDA31BFB1F380003F5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LLVMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bencochran.LLVMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B827FD7E1BFB1F370003F5D7 /* Build configuration list for PBXProject "LLVM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B827FD9C1BFB1F380003F5D7 /* Debug */,
+				B827FD9D1BFB1F380003F5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B827FD9E1BFB1F380003F5D7 /* Build configuration list for PBXNativeTarget "LLVM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B827FD9F1BFB1F380003F5D7 /* Debug */,
+				B827FDA01BFB1F380003F5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B827FDA11BFB1F380003F5D7 /* Build configuration list for PBXNativeTarget "LLVMTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B827FDA21BFB1F380003F5D7 /* Debug */,
+				B827FDA31BFB1F380003F5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B827FD7B1BFB1F370003F5D7 /* Project object */;
+}
