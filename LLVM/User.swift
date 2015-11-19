@@ -4,20 +4,35 @@
 //
 
 // TODO CollectionType this up
-public class User : Value {
-    public func operandAtIndex(index: UInt32) -> Value {
-        return Value(ref: LLVMGetOperand(ref, index))
+public protocol UserType : ValueType {
+    func operandAtIndex(index: UInt32) -> ValueType
+    func operandUseAtIndex(index: UInt32) -> Use
+    func setOperand(value: ValueType, atIndex: UInt32)
+    var operandCount: UInt32 { get }
+}
+
+public extension UserType {
+    public func operandAtIndex(index: UInt32) -> ValueType {
+        return AnyValue(ref: LLVMGetOperand(ref, index))
     }
     
     public func operandUseAtIndex(index: UInt32) -> Use {
         return Use(ref: LLVMGetOperandUse(ref, index))
     }
 
-    public func setOperand(value: Value, atIndex: UInt32) {
+    public func setOperand(value: ValueType, atIndex: UInt32) {
         LLVMSetOperand(ref, atIndex, value.ref)
     }
     
     public var operandCount: UInt32 {
         return UInt32(LLVMGetNumOperands(ref))
+    }
+}
+
+// TODO CollectionType this up
+public struct User : UserType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
     }
 }

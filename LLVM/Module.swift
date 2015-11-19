@@ -46,10 +46,10 @@ public class Module {
         return Context(ref: LLVMGetModuleContext(ref), managed: false)
     }
     
-    public func typeByName(name: String) -> Type? {
+    public func typeByName(name: String) -> TypeType? {
         let typeRef = LLVMGetTypeByName(ref, name)
         if typeRef == nil { return .None }
-        return Type.foo(typeRef)
+        return AnyType(ref: typeRef)
     }
     
     public func functionByName(name: String) -> Function? {

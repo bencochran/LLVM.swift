@@ -3,9 +3,14 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
-public class Function : Constant {
-    public convenience init(name: String, type: FunctionType, inModule module: Module) {
-        self.init(ref: LLVMAddFunction(module.ref, name, type.ref))
+public struct Function : ConstantType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(name: String, type: FunctionType, inModule module: Module) {
+        ref = LLVMAddFunction(module.ref, name, type.ref)
     }
     
     public var intrinsicID: UInt32 {
@@ -78,7 +83,12 @@ public class Function : Constant {
     }
 }
 
-public class Argument : Value {
+public struct Argument : ValueType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
     public var attributes: LLVMAttribute {
         return LLVMGetFunctionAttr(ref)
     }

@@ -3,17 +3,24 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
-public class Value {
-    internal var ref: LLVMValueRef
+public protocol ValueType {
+    var ref: LLVMValueRef { get }
+    init(ref: LLVMValueRef)
+    init?(maybeRef ref: LLVMValueRef)
     
-    internal init(ref: LLVMValueRef) {
-        guard ref != nil else { fatalError("unexpected nil value") }
-        self.ref = ref
-    }
+    var name: String? { get }
+    var string: String? { get }
+    var isConstant: Bool { get }
+    var isUndefined: Bool { get }
+    var uses: AnyGenerator<Use> { get }
     
-    internal init?(maybeRef ref: LLVMValueRef) {
-        self.ref = ref
+    func replaceAllUsesWith(value: ValueType)
+}
+
+public extension ValueType {
+    public init?(maybeRef ref: LLVMValueRef) {
         if ref == nil { return nil }
+        self.init(ref: ref)
     }
     
     public var name: String? {
@@ -36,7 +43,7 @@ public class Value {
         return .fromCString(string)
     }
     
-    public func replaceAllUsesWith(value: Value) {
+    public func replaceAllUsesWith(value: ValueType) {
         LLVMReplaceAllUsesWith(ref, value.ref)
     }
     
@@ -61,5 +68,13 @@ public class Value {
             return ref != nil ? Use(ref: ref) : nil
         }
     }
+}
+
+public struct AnyValue : ValueType {
+    public var ref: LLVMValueRef
     
+    public init(ref: LLVMValueRef) {
+        guard ref != nil else { fatalError("unexpected nil value") }
+        self.ref = ref
+    }
 }
