@@ -14,8 +14,8 @@ public class BasicBlock {
         return Function(maybeRef: LLVMGetBasicBlockParent(ref))
     }
     
-    public var terminator: TerminatorInstruction? {
-        return TerminatorInstruction(maybeRef: LLVMGetBasicBlockTerminator(ref))
+    public var terminator: TerminatorInstructionType? {
+        return AnyTerminatorInstruction(maybeRef: LLVMGetBasicBlockTerminator(ref))
     }
     
     public func insertInContext(context: Context, name: String) -> BasicBlock {
@@ -39,11 +39,11 @@ public class BasicBlock {
         LLVMMoveBasicBlockAfter(ref, block.ref)
     }
     
-    public var firstInstruction: Instruction? {
-        return Instruction(maybeRef: LLVMGetFirstInstruction(ref))
+    public var firstInstruction: InstructionType? {
+        return AnyInstruction(maybeRef: LLVMGetFirstInstruction(ref))
     }
     
-    public var lastInstruction: Instruction? {
-        return Instruction(maybeRef: LLVMGetLastInstruction(ref))
+    public var lastInstruction: InstructionType? {
+        return AnyInstruction(maybeRef: LLVMGetLastInstruction(ref))
     }
 }

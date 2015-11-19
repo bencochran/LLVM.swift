@@ -3,17 +3,26 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
-public class Instruction : User {
+public protocol InstructionType : UserType {
+    var parent: BasicBlock { get }
+    var nextInstruction: InstructionType? { get }
+    var previousInstruction: InstructionType? { get }
+    var opCode: LLVMOpcode { get }
+}
+
+
+
+public extension InstructionType {
     public var parent: BasicBlock {
         return BasicBlock(ref: LLVMGetInstructionParent(ref))
     }
     
-    public var nextInstruction: Instruction? {
-        return Instruction(maybeRef: LLVMGetNextInstruction(ref))
+    public var nextInstruction: InstructionType? {
+        return AnyInstruction(maybeRef: LLVMGetNextInstruction(ref))
     }
     
-    public var previousInstruction: Instruction? {
-        return Instruction(maybeRef: LLVMGetPreviousInstruction(ref))
+    public var previousInstruction: InstructionType? {
+        return AnyInstruction(maybeRef: LLVMGetPreviousInstruction(ref))
     }
     
     public var opCode: LLVMOpcode {
@@ -21,63 +30,119 @@ public class Instruction : User {
     }
 }
 
-public class TerminatorInstruction : Instruction {
-    
+public struct AnyInstruction : InstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
 }
 
-public class ReturnInstruction : TerminatorInstruction {
-    
+public protocol TerminatorInstructionType : InstructionType { }
+
+public struct AnyTerminatorInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
 }
 
-public class BranchInstruction : TerminatorInstruction {
-    
+public struct ReturnInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
 }
 
-public class SwitchInstruction : TerminatorInstruction {
-    func addCase(on: Constant, destination: BasicBlock) {
+public struct BranchInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+}
+
+public struct SwitchInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+    func addCase(on: ConstantType, destination: BasicBlock) {
         LLVMAddCase(ref, on.ref, destination.ref)
     }
 }
 
-public class IndirectBranchInstruction : TerminatorInstruction {
+public struct IndirectBranchInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     public func addDestination(destination: BasicBlock) {
         LLVMAddDestination(ref, destination.ref)
     }
 }
 
-public class ResumeInstruction : TerminatorInstruction {
+public struct ResumeInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class InvokeInstruction : TerminatorInstruction {
+public struct InvokeInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class UnreachableInstruction : TerminatorInstruction {
+public struct UnreachableInstruction : TerminatorInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class CallInstruction : Instruction {
+public struct CallInstruction : InstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class UnaryInstruction : Instruction {
+public protocol UnaryInstructionType : InstructionType { }
+
+public struct AllocaInstruction : UnaryInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class AllocaInstruction : UnaryInstruction {
+public struct LoadInstruction : UnaryInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class LoadInstruction : UnaryInstruction {
+public struct VAArgInstruction : UnaryInstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 
-public class VAArgInstruction : UnaryInstruction {
-    
-}
-
-public class PHINode : Instruction {
+public struct PHINode : InstructionType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
     
 }
 

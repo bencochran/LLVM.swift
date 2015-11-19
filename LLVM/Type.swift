@@ -3,12 +3,16 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
-public class Type {
-    internal var ref: LLVMTypeRef
-    private init(ref: LLVMTypeRef) {
-        self.ref = ref
-    }
+public protocol TypeType {
+    var ref: LLVMValueRef { get }
+    init(ref: LLVMValueRef)
     
+    var kind: LLVMTypeKind { get }
+    var isSized: Bool { get }
+    var string: String? { get }
+}
+
+extension TypeType {
     public var kind: LLVMTypeKind {
         return LLVMGetTypeKind(ref)
     }
@@ -22,32 +26,21 @@ public class Type {
         defer { LLVMDisposeMessage(string) }
         return .fromCString(string)
     }
-    
-    public static func foo(ref: LLVMTypeRef) -> Type? {
-        let kind = LLVMGetTypeKind(ref)
-        switch kind {
-        case LLVMVoidTypeKind: return VoidType(ref: ref)
-        case LLVMHalfTypeKind: return RealType(ref: ref)
-        case LLVMFloatTypeKind: return RealType(ref: ref)
-        case LLVMDoubleTypeKind: return RealType(ref: ref)
-        case LLVMX86_FP80TypeKind: return RealType(ref: ref)
-        case LLVMPPC_FP128TypeKind: return RealType(ref: ref)
-        case LLVMLabelTypeKind: return LabelType(ref: ref)
-        case LLVMIntegerTypeKind: return IntType(ref: ref)
-        case LLVMFunctionTypeKind: return FunctionType(ref: ref)
-        case LLVMStructTypeKind: return StructType(ref: ref)
-        case LLVMArrayTypeKind: return ArrayType(ref: ref)
-        case LLVMPointerTypeKind: return PointerType(ref: ref)
-        case LLVMVectorTypeKind: return VectorType(ref: ref)
-        case LLVMMetadataTypeKind: return MetadataType(ref: ref)
-        case LLVMX86_MMXTypeKind: return X86MMXType(ref: ref)
-        default: return Type(ref: ref)
-        }
-    }
-    
 }
 
-public class IntType : Type {
+public struct AnyType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+}
+
+public struct IntType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
     public static func int1(inContext context: Context) -> IntType {
         return IntType(ref: LLVMInt1TypeInContext(context.ref))
     }
@@ -77,7 +70,12 @@ public class IntType : Type {
     }
 }
 
-public class RealType : Type {
+public struct RealType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
     public static func half(inContext context: Context) -> RealType {
         return RealType(ref: LLVMHalfTypeInContext(context.ref))
     }
@@ -104,11 +102,15 @@ public class RealType : Type {
 }
 
 
-public class FunctionType : Type {
-    public convenience init(returnType: Type, paramTypes: [Type], isVarArg: Bool) {
+public struct FunctionType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(returnType: TypeType, paramTypes: [TypeType], isVarArg: Bool) {
         var paramTypeValues = paramTypes.map { $0.ref }
-        let ref = LLVMFunctionType(returnType.ref, &paramTypeValues, UInt32(paramTypeValues.count), isVarArg ? 1 : 0)
-        self.init(ref: ref)
+        ref = LLVMFunctionType(returnType.ref, &paramTypeValues, UInt32(paramTypeValues.count), isVarArg ? 1 : 0)
     }
     
     public var isVarArg: Bool {
@@ -119,30 +121,31 @@ public class FunctionType : Type {
         return LLVMCountParamTypes(ref)
     }
     
-    public var paramTypes: [Type] {
+    public var paramTypes: [TypeType] {
         let count = Int(paramTypesCount)
         let refs = UnsafeMutablePointer<LLVMTypeRef>.alloc(count)
         defer { refs.dealloc(count) }
         
         LLVMGetParamTypes(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map(Type.init)
+        return UnsafeMutableBufferPointer(start: refs, count: count).map(AnyType.init)
     }
 }
 
-public class CompositeType : Type {
-    
-}
+public protocol CompositeTypeType : TypeType { }
 
-public class StructType : CompositeType {
-    public convenience init(elementTypes: [Type], packed: Bool, inContext context: Context) {
+public struct StructType : CompositeTypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(elementTypes: [TypeType], packed: Bool, inContext context: Context) {
         var elementTypeValues = elementTypes.map { $0.ref }
-        let ref = LLVMStructTypeInContext(context.ref, &elementTypeValues, UInt32(elementTypeValues.count), packed ? 1 : 0)
-        self.init(ref: ref)
+        ref = LLVMStructTypeInContext(context.ref, &elementTypeValues, UInt32(elementTypeValues.count), packed ? 1 : 0)
     }
     
-    public convenience init(named name: String, inContext context: Context) {
-        let ref = LLVMStructCreateNamed(context.ref, name)
-        self.init(ref: ref)
+    public init(named name: String, inContext context: Context) {
+        ref = LLVMStructCreateNamed(context.ref, name)
     }
     
     public var name: String? {
@@ -150,14 +153,14 @@ public class StructType : CompositeType {
         return .fromCString(name)
     }
     
-    public var structure: ([Type], packed: Bool) {
+    public var structure: ([TypeType], packed: Bool) {
         get {
             let count = Int(LLVMCountStructElementTypes(ref))
             let refs = UnsafeMutablePointer<LLVMTypeRef>.alloc(count)
             defer { refs.dealloc(count) }
             
             LLVMGetParamTypes(ref, refs)
-            let types = UnsafeMutableBufferPointer(start: refs, count: count).map(Type.init)
+            let types = UnsafeMutableBufferPointer(start: refs, count: count).map({ AnyType(ref: $0) as TypeType })
             
             let packed = LLVMIsPackedStruct(ref) != 0
             return (types, packed)
@@ -173,16 +176,24 @@ public class StructType : CompositeType {
     }
 }
 
-public class SequentialType : CompositeType {
-    public var type: Type {
-        return Type(ref: LLVMGetElementType(ref))
+public protocol SequentialTypeType : CompositeTypeType {
+    var type: TypeType { get }
+}
+
+public extension SequentialTypeType {
+    var type: TypeType {
+        return AnyType(ref: LLVMGetElementType(ref))
     }
 }
 
-public class ArrayType : SequentialType {
-    public convenience init(type: Type, count: UInt32) {
-        let ref = LLVMArrayType(type.ref, count)
-        self.init(ref: ref)
+public struct ArrayType : SequentialTypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(type: TypeType, count: UInt32) {
+        ref = LLVMArrayType(type.ref, count)
     }
     
     public var length: UInt32 {
@@ -190,9 +201,14 @@ public class ArrayType : SequentialType {
     }
 }
 
-public class PointerType : SequentialType {
-    public convenience init(type: Type, addressSpace: UInt32) {
-        self.init(ref: LLVMPointerType(type.ref, addressSpace))
+public struct PointerType : SequentialTypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(type: TypeType, addressSpace: UInt32) {
+        ref = LLVMPointerType(type.ref, addressSpace)
     }
     
     public var addressSpace: UInt32 {
@@ -200,9 +216,14 @@ public class PointerType : SequentialType {
     }
 }
 
-public class VectorType : SequentialType {
-    public convenience init(type: Type, count: UInt32) {
-        self.init(ref: LLVMVectorType(type.ref, count))
+public struct VectorType : SequentialTypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(type: TypeType, count: UInt32) {
+        ref = LLVMVectorType(type.ref, count)
     }
     
     public var size: UInt32 {
@@ -210,26 +231,46 @@ public class VectorType : SequentialType {
     }
 }
 
-public class VoidType : Type {
-    public convenience init(inContext context: Context) {
-        self.init(ref: LLVMVoidTypeInContext(context.ref))
+public struct VoidType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(inContext context: Context) {
+        ref = LLVMVoidTypeInContext(context.ref)
     }
 }
 
-public class LabelType : Type {
-    public convenience init(inContext context: Context) {
-        self.init(ref: LLVMLabelTypeInContext(context.ref))
+public struct LabelType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(inContext context: Context) {
+        ref = LLVMLabelTypeInContext(context.ref)
     }
 }
 
-public class X86MMXType : Type {
-    public convenience init(inContext context: Context) {
-        self.init(ref: LLVMX86MMXTypeInContext(context.ref))
+public struct X86MMXType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(inContext context: Context) {
+        ref = LLVMX86MMXTypeInContext(context.ref)
     }
 }
 
-public class MetadataType : Type {
-    public convenience init(inContext context: Context) {
-        self.init(ref: LLVMX86MMXTypeInContext(context.ref))
+public struct MetadataType : TypeType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
+
+    public init(inContext context: Context) {
+        ref = LLVMX86MMXTypeInContext(context.ref)
     }
 }

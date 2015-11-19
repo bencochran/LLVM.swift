@@ -3,14 +3,15 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
-public class GlobalValue : Constant {
+public protocol GlobalValueType : ConstantType { }
 
-}
+public protocol GlobalObjectType : GlobalValueType { }
 
-public class GlobalObject : GlobalValue {
+public protocol GlobalVariableType : GlobalObjectType { }
 
-}
-
-public class GlobalVariable : GlobalObject {
-    
+public struct AnyGlobalVariable : GlobalVariableType {
+    public let ref: LLVMValueRef
+    public init(ref: LLVMValueRef) {
+        self.ref = ref
+    }
 }
