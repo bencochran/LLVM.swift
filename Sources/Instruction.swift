@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public protocol InstructionType : UserType {
     var parent: BasicBlock { get }
     var nextInstruction: InstructionType? { get }

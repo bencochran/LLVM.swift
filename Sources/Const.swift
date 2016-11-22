@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public protocol ConstantType : ValueType {
     var isNull: Bool { get }
 }

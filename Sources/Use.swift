@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public struct Use {
     internal var ref: LLVMUseRef
     internal init(ref: LLVMUseRef) {

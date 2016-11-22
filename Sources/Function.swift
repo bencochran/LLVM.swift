@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public struct Function : ConstantType {
     public let ref: LLVMValueRef
     public init(ref: LLVMValueRef) {

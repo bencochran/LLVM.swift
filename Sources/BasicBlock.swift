@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public class BasicBlock {
     public let ref: LLVMBasicBlockRef
     

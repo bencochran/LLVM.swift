@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public protocol TypeType {
     var ref: LLVMValueRef { get }
     init(ref: LLVMValueRef)

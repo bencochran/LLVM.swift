@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import LLVM_C
 
 public class Module {
     internal let ref: LLVMModuleRef

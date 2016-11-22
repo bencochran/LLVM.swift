@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 public class Context {
     internal let ref: LLVMContextRef
     private let managed: Bool

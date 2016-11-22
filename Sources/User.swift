@@ -3,6 +3,8 @@
 //  Copyright © 2015 Ben Cochran. All rights reserved.
 //
 
+import LLVM_C
+
 // TODO CollectionType this up
 public protocol UserType : ValueType {
     func operandAtIndex(index: UInt32) -> ValueType
