@@ -21,11 +21,11 @@ public struct RealConstant : ConstantType {
         self.ref = ref
     }
 
-    public static func type(type: TypeType, value: Double) -> RealConstant {
+    public static func type(_ type: TypeType, value: Double) -> RealConstant {
         return RealConstant(ref: LLVMConstReal(type.ref, value))
     }
     
-    public static func type(type: TypeType, value: String) -> RealConstant {
+    public static func type(_ type: TypeType, value: String) -> RealConstant {
         return RealConstant(ref: LLVMConstRealOfString(type.ref, value))
     }
     

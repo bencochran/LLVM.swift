@@ -7,22 +7,22 @@ import LLVM_C
 
 // TODO CollectionType this up
 public protocol UserType : ValueType {
-    func operandAtIndex(index: UInt32) -> ValueType
-    func operandUseAtIndex(index: UInt32) -> Use
-    func setOperand(value: ValueType, atIndex: UInt32)
+    func operandAtIndex(_ index: UInt32) -> ValueType
+    func operandUseAtIndex(_ index: UInt32) -> Use
+    func setOperand(_ value: ValueType, atIndex: UInt32)
     var operandCount: UInt32 { get }
 }
 
 public extension UserType {
-    public func operandAtIndex(index: UInt32) -> ValueType {
+    public func operandAtIndex(_ index: UInt32) -> ValueType {
         return AnyValue(ref: LLVMGetOperand(ref, index))
     }
     
-    public func operandUseAtIndex(index: UInt32) -> Use {
+    public func operandUseAtIndex(_ index: UInt32) -> Use {
         return Use(ref: LLVMGetOperandUse(ref, index))
     }
 
-    public func setOperand(value: ValueType, atIndex: UInt32) {
+    public func setOperand(_ value: ValueType, atIndex: UInt32) {
         LLVMSetOperand(ref, atIndex, value.ref)
     }
     

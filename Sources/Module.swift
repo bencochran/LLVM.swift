@@ -20,12 +20,12 @@ public class Module {
     public var string: String? {
         let charStar = LLVMPrintModuleToString(ref)
         defer { LLVMDisposeMessage(charStar) }
-        return String.fromCString(charStar)
+        return String(cString: charStar!)
     }
     
     public var dataLayout: String {
         get {
-            return String.fromCString(LLVMGetDataLayout(ref))!
+            return String(cString: LLVMGetDataLayout(ref))
         }
         set {
             LLVMSetDataLayout(ref, dataLayout)
@@ -34,7 +34,7 @@ public class Module {
     
     public var target: String {
         get {
-            return String.fromCString(LLVMGetTarget(ref))!
+            return String(cString: LLVMGetTarget(ref))
         }
         set {
             LLVMSetTarget(ref, target)
@@ -47,16 +47,16 @@ public class Module {
         return Context(ref: LLVMGetModuleContext(ref), managed: false)
     }
     
-    public func typeByName(name: String) -> TypeType? {
+    public func typeByName(_ name: String) -> TypeType? {
         let typeRef = LLVMGetTypeByName(ref, name)
-        if typeRef == nil { return .None }
-        return AnyType(ref: typeRef)
+        if typeRef == nil { return .none }
+        return AnyType(ref: typeRef!)
     }
     
-    public func functionByName(name: String) -> Function? {
+    public func functionByName(_ name: String) -> Function? {
         let funcRef = LLVMGetNamedFunction(ref, name)
-        if funcRef == nil { return .None }
-        return Function(ref: funcRef)
+        if funcRef == nil { return .none }
+        return Function(ref: funcRef!)
     }
     
     // true = valid, false = invalid (opposite of LLVM’s whacky status)
@@ -64,17 +64,20 @@ public class Module {
         return LLVMVerifyModule(ref, LLVMReturnStatusAction, nil) == 0
     }
     
-    public var functions: AnyGenerator<Function> {
+    public var functions: AnyIterator<Function> {
         var previousRef: LLVMValueRef?
-        return anyGenerator {
-            let ref: LLVMValueRef
+        return AnyIterator {
+            let ref: LLVMValueRef?
             if let previous = previousRef {
                 ref = LLVMGetNextFunction(previous)
             } else {
                 ref = LLVMGetFirstFunction(self.ref)
             }
             previousRef = ref
-            return ref != nil ? Function(ref: ref) : nil
+            if let ref = ref {
+                return Function(ref: ref)
+            }
+            return nil
         }
     }
 }

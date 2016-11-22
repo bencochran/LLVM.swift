@@ -20,7 +20,7 @@ public class BasicBlock {
         return AnyTerminatorInstruction(maybeRef: LLVMGetBasicBlockTerminator(ref))
     }
     
-    public func insertInContext(context: Context, name: String) -> BasicBlock {
+    public func insertInContext(_ context: Context, name: String) -> BasicBlock {
         return BasicBlock(ref: LLVMInsertBasicBlockInContext(context.ref, ref, name))
     }
     
@@ -33,11 +33,11 @@ public class BasicBlock {
         LLVMRemoveBasicBlockFromParent(ref)
     }
     
-    public func moveBefore(block: BasicBlock) {
+    public func moveBefore(_ block: BasicBlock) {
         LLVMMoveBasicBlockBefore(ref, block.ref)
     }
     
-    public func moveAfter(block: BasicBlock) {
+    public func moveAfter(_ block: BasicBlock) {
         LLVMMoveBasicBlockAfter(ref, block.ref)
     }
     

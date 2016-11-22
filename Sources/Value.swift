@@ -8,26 +8,26 @@ import LLVM_C
 public protocol ValueType {
     var ref: LLVMValueRef { get }
     init(ref: LLVMValueRef)
-    init?(maybeRef ref: LLVMValueRef)
+    init?(maybeRef ref: LLVMValueRef?)
     
     var name: String? { get }
     var string: String? { get }
     var isConstant: Bool { get }
     var isUndefined: Bool { get }
-    var uses: AnyGenerator<Use> { get }
+    var uses: AnyIterator<Use> { get }
     
-    func replaceAllUsesWith(value: ValueType)
+    func replaceAllUsesWith(_ value: ValueType)
 }
 
 public extension ValueType {
-    public init?(maybeRef ref: LLVMValueRef) {
-        if ref == nil { return nil }
+    public init?(maybeRef ref: LLVMValueRef?) {
+        guard let ref = ref else { return nil }
         self.init(ref: ref)
     }
     
     public var name: String? {
         get {
-            return .fromCString(LLVMGetValueName(ref))
+            return String(cString: LLVMGetValueName(ref))
         }
         set {
             // Swift can’t do its type magic with `String?` or `name ?? nil`
@@ -42,10 +42,10 @@ public extension ValueType {
     public var string: String? {
         let string = LLVMPrintValueToString(ref)
         defer { LLVMDisposeMessage(string) }
-        return .fromCString(string)
+        return String(cString: string!)
     }
     
-    public func replaceAllUsesWith(value: ValueType) {
+    public func replaceAllUsesWith(_ value: ValueType) {
         LLVMReplaceAllUsesWith(ref, value.ref)
     }
     
@@ -57,17 +57,20 @@ public extension ValueType {
         return LLVMIsUndef(ref) != 0
     }
     
-    public var uses: AnyGenerator<Use> {
+    public var uses: AnyIterator<Use> {
         var previousRef: LLVMValueRef?
-        return anyGenerator {
-            let ref: LLVMValueRef
+        return AnyIterator {
+            let ref: LLVMValueRef?
             if let previous = previousRef {
                 ref = LLVMGetNextUse(previous)
             } else {
                 ref = LLVMGetFirstUse(self.ref)
             }
             previousRef = ref
-            return ref != nil ? Use(ref: ref) : nil
+            if let ref = ref {
+                return Use(ref: ref)
+            }
+            return nil
         }
     }
 }
@@ -76,7 +79,6 @@ public struct AnyValue : ValueType {
     public var ref: LLVMValueRef
     
     public init(ref: LLVMValueRef) {
-        guard ref != nil else { fatalError("unexpected nil value") }
         self.ref = ref
     }
 }

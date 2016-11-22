@@ -26,7 +26,7 @@ extension TypeType {
     public var string: String? {
         let string = LLVMPrintTypeToString(ref)
         defer { LLVMDisposeMessage(string) }
-        return .fromCString(string)
+        return String(cString: string!)
     }
 }
 
@@ -111,7 +111,7 @@ public struct FunctionType : TypeType {
     }
 
     public init(returnType: TypeType, paramTypes: [TypeType], isVarArg: Bool) {
-        var paramTypeValues = paramTypes.map { $0.ref }
+        var paramTypeValues = paramTypes.map { Optional.some($0.ref) }
         ref = LLVMFunctionType(returnType.ref, &paramTypeValues, UInt32(paramTypeValues.count), isVarArg ? 1 : 0)
     }
     
@@ -125,11 +125,11 @@ public struct FunctionType : TypeType {
     
     public var paramTypes: [TypeType] {
         let count = Int(paramTypesCount)
-        let refs = UnsafeMutablePointer<LLVMTypeRef>.alloc(count)
-        defer { refs.dealloc(count) }
+        let refs = UnsafeMutablePointer<LLVMTypeRef?>.allocate(capacity: count)
+        defer { refs.deallocate(capacity: count) }
         
         LLVMGetParamTypes(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map(AnyType.init)
+        return UnsafeMutableBufferPointer(start: refs, count: count).map { AnyType(ref: $0!) }
     }
 }
 
@@ -142,7 +142,7 @@ public struct StructType : CompositeTypeType {
     }
 
     public init(elementTypes: [TypeType], packed: Bool, inContext context: Context) {
-        var elementTypeValues = elementTypes.map { $0.ref }
+        var elementTypeValues = elementTypes.map { Optional.some($0.ref) }
         ref = LLVMStructTypeInContext(context.ref, &elementTypeValues, UInt32(elementTypeValues.count), packed ? 1 : 0)
     }
     
@@ -152,23 +152,23 @@ public struct StructType : CompositeTypeType {
     
     public var name: String? {
         let name = LLVMGetStructName(ref)
-        return .fromCString(name)
+        return String(cString: name!)
     }
     
     public var structure: ([TypeType], packed: Bool) {
         get {
             let count = Int(LLVMCountStructElementTypes(ref))
-            let refs = UnsafeMutablePointer<LLVMTypeRef>.alloc(count)
-            defer { refs.dealloc(count) }
+            let refs = UnsafeMutablePointer<LLVMTypeRef?>.allocate(capacity: count)
+            defer { refs.deallocate(capacity: count) }
             
             LLVMGetParamTypes(ref, refs)
-            let types = UnsafeMutableBufferPointer(start: refs, count: count).map({ AnyType(ref: $0) as TypeType })
+            let types = UnsafeMutableBufferPointer(start: refs, count: count).map { AnyType(ref: $0!) as TypeType }
             
             let packed = LLVMIsPackedStruct(ref) != 0
             return (types, packed)
         }
         set {
-            var elementTypeValues = structure.0.map { $0.ref }
+            var elementTypeValues = structure.0.map { Optional.some($0.ref) }
             LLVMStructSetBody(ref, &elementTypeValues, UInt32(elementTypeValues.count), structure.packed ? 1 : 0)
         }
     }

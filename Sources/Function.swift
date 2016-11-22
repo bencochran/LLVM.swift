@@ -33,11 +33,11 @@ public struct Function : ConstantType {
     }
     
     // TODO: Roll add/remove into a setter on `attributes`
-    public func addAttribute(attribute: LLVMAttribute) {
+    public func addAttribute(_ attribute: LLVMAttribute) {
         LLVMAddFunctionAttr(ref, attribute)
     }
     
-    public func removeAttribute(attribute: LLVMAttribute) {
+    public func removeAttribute(_ attribute: LLVMAttribute) {
         LLVMRemoveFunctionAttr(ref, attribute)
     }
 
@@ -47,14 +47,14 @@ public struct Function : ConstantType {
     
     public var params: [Argument] {
         let count = Int(paramCount)
-        let refs = UnsafeMutablePointer<LLVMValueRef>.alloc(count)
-        defer { refs.dealloc(count) }
+        let refs = UnsafeMutablePointer<LLVMValueRef?>.allocate(capacity: count)
+        defer { refs.deallocate(capacity: count) }
         
         LLVMGetParams(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map(Argument.init)
+        return UnsafeMutableBufferPointer(start: refs, count: count).map { Argument(ref: $0!) }
     }
 
-    public func paramAtIndex(index: UInt32) -> Argument {
+    public func paramAtIndex(_ index: UInt32) -> Argument {
         return Argument(ref: LLVMGetParam(ref, index))
     }
     
@@ -64,18 +64,18 @@ public struct Function : ConstantType {
     
     public var basicBlocks: [BasicBlock] {
         let count = Int(paramCount)
-        let refs = UnsafeMutablePointer<LLVMBasicBlockRef>.alloc(count)
-        defer { refs.dealloc(count) }
+        let refs = UnsafeMutablePointer<LLVMBasicBlockRef?>.allocate(capacity: count)
+        defer { refs.deallocate(capacity: count) }
         
         LLVMGetBasicBlocks(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map(BasicBlock.init)
+        return UnsafeMutableBufferPointer(start: refs, count: count).map { BasicBlock(ref: $0!) }
     }
     
     public var entry: BasicBlock {
         return BasicBlock(ref: LLVMGetEntryBasicBlock(ref))
     }
     
-    public func appendBasicBlock(name: String, context: Context) -> BasicBlock {
+    public func appendBasicBlock(_ name: String, context: Context) -> BasicBlock {
         return BasicBlock(ref: LLVMAppendBasicBlockInContext(context.ref, ref, name))
     }
     
@@ -96,11 +96,11 @@ public struct Argument : ValueType {
     }
     
     // TODO: Roll add/remove into a setter on `attributes`
-    public func addAttribute(attribute: LLVMAttribute) {
+    public func addAttribute(_ attribute: LLVMAttribute) {
         LLVMAddFunctionAttr(ref, attribute)
     }
     
-    public func removeAttribute(attribute: LLVMAttribute) {
+    public func removeAttribute(_ attribute: LLVMAttribute) {
         LLVMRemoveFunctionAttr(ref, attribute)
     }
 }

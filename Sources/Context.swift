@@ -10,7 +10,6 @@ public class Context {
     private let managed: Bool
     
     internal init(ref: LLVMContextRef, managed: Bool) {
-        guard ref != nil else { fatalError("unexpected nil value") }
         self.ref = ref
         self.managed = managed
     }

@@ -67,7 +67,7 @@ public struct SwitchInstruction : TerminatorInstructionType {
     public init(ref: LLVMValueRef) {
         self.ref = ref
     }
-    func addCase(on: ConstantType, destination: BasicBlock) {
+    func addCase(_ on: ConstantType, destination: BasicBlock) {
         LLVMAddCase(ref, on.ref, destination.ref)
     }
 }
@@ -77,7 +77,7 @@ public struct IndirectBranchInstruction : TerminatorInstructionType {
     public init(ref: LLVMValueRef) {
         self.ref = ref
     }
-    public func addDestination(destination: BasicBlock) {
+    public func addDestination(_ destination: BasicBlock) {
         LLVMAddDestination(ref, destination.ref)
     }
 }

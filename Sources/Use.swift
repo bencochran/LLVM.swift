@@ -8,7 +8,6 @@ import LLVM_C
 public struct Use {
     internal var ref: LLVMUseRef
     internal init(ref: LLVMUseRef) {
-        guard ref != nil else { fatalError("unexpected nil value") }
         self.ref = ref
     }
     
