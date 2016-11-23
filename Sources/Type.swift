@@ -124,12 +124,9 @@ public struct FunctionType : TypeType {
     }
     
     public var paramTypes: [TypeType] {
-        let count = Int(paramTypesCount)
-        let refs = UnsafeMutablePointer<LLVMTypeRef?>.allocate(capacity: count)
-        defer { refs.deallocate(capacity: count) }
-        
-        LLVMGetParamTypes(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map { AnyType(ref: $0!) }
+        var refs = [LLVMTypeRef?](repeating: nil, count: Int(paramTypesCount))
+        refs.withUnsafeMutableBufferPointer { LLVMGetParamTypes(ref, $0.baseAddress) }
+        return refs.map { AnyType(ref: $0!) }
     }
 }
 
@@ -157,13 +154,9 @@ public struct StructType : CompositeTypeType {
     
     public var structure: ([TypeType], packed: Bool) {
         get {
-            let count = Int(LLVMCountStructElementTypes(ref))
-            let refs = UnsafeMutablePointer<LLVMTypeRef?>.allocate(capacity: count)
-            defer { refs.deallocate(capacity: count) }
-            
-            LLVMGetParamTypes(ref, refs)
-            let types = UnsafeMutableBufferPointer(start: refs, count: count).map { AnyType(ref: $0!) as TypeType }
-            
+            var refs = [LLVMTypeRef?](repeating: nil, count: Int(LLVMCountStructElementTypes(ref)))
+            refs.withUnsafeMutableBufferPointer { LLVMGetStructElementTypes(ref, $0.baseAddress) }
+            let types = refs.map { AnyType(ref: $0!) as TypeType }
             let packed = LLVMIsPackedStruct(ref) != 0
             return (types, packed)
         }

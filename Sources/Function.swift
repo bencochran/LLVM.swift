@@ -46,12 +46,9 @@ public struct Function : ConstantType {
     }
     
     public var params: [Argument] {
-        let count = Int(paramCount)
-        let refs = UnsafeMutablePointer<LLVMValueRef?>.allocate(capacity: count)
-        defer { refs.deallocate(capacity: count) }
-        
-        LLVMGetParams(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map { Argument(ref: $0!) }
+        var refs = [LLVMValueRef?](repeating: nil, count: Int(paramCount))
+        refs.withUnsafeMutableBufferPointer { LLVMGetParams(ref, $0.baseAddress) }
+        return refs.map { Argument(ref: $0!) }
     }
 
     public func paramAtIndex(_ index: UInt32) -> Argument {
@@ -63,12 +60,9 @@ public struct Function : ConstantType {
     }
     
     public var basicBlocks: [BasicBlock] {
-        let count = Int(paramCount)
-        let refs = UnsafeMutablePointer<LLVMBasicBlockRef?>.allocate(capacity: count)
-        defer { refs.deallocate(capacity: count) }
-        
-        LLVMGetBasicBlocks(ref, refs)
-        return UnsafeMutableBufferPointer(start: refs, count: count).map { BasicBlock(ref: $0!) }
+        var refs = [LLVMBasicBlockRef?](repeating: nil, count: Int(basicBlockCount))
+        refs.withUnsafeMutableBufferPointer { LLVMGetBasicBlocks(ref, $0.baseAddress) }
+        return refs.map { BasicBlock(ref: $0!) }
     }
     
     public var entry: BasicBlock {
